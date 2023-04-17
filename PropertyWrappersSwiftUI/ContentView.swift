@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var darkModeEnable = false
+    @State private var showDetailView = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            Color(darkModeEnable ? .black : .white)
+            
+            VStack {
+                Button {
+                    showDetailView.toggle()
+                } label: {
+                    Text("Show Detail View")
+                }
+
+            }
+            .padding()
         }
-        .padding()
+        .sheet(isPresented: $showDetailView, content: {
+            DetailView(showDetailView: $showDetailView, darkModeEnable: $darkModeEnable)
+        })
+        .ignoresSafeArea()
     }
 }
 
